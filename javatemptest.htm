@@ -1,0 +1,105 @@
+<html>
+
+<head>
+
+<title>Mbed WebServer Local</title>
+
+
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<meta name="generator" content="HAPedit 3.0">
+
+          <style type="text/css">
+            body{font-family: arial,sans-serif}
+            table{border: 1px solid #ccc; border-collapse: collapse;margin-bottom: 30px}
+            th{padding: 3px 30px}
+		    td{padding: 4px 50px}
+            thead th{background-color: #cfc}
+  
+             #canvas {  
+                height: 300px;  
+                margin: 20px 0px 20px 0px;   
+                text-align: left;  
+                width: 640px;  
+              border:2px solid #999;  
+             }  
+            </style>  
+            
+
+          <script src="mbedrpc.js" language="javascript"></script>  
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+          
+
+
+		  <script type="text/javascript">
+          			mbed = new HTTPRPC();
+				led2 = new DigitalOut(mbed, LED_2)
+          			
+          			anan = new AnalogIn(mbed, ADC_TEMP);	
+          			function print(str){
+            				
+          			document.getElementById("t").innerHTML = str.toFixed(2);;
+          					
+          				
+          				
+          			}
+       	  </script>
+
+
+</head>
+
+<body>
+
+        <table>
+           <thead>
+            <tr>
+              
+              <th>Temperature [&degC] </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div id="t"></div></td>
+            </tr> 
+		  </tbody>
+        </table>
+
+        <div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+
+	    
+
+
+		<script language="javascript">           
+            // mbed script READ THE TEMP
+            var i = 1;
+
+ 			function ti(){
+				led2.write(i);
+				
+				if(i == 0){
+					 i = 1;
+				}else{
+					  i = 0;
+					  }
+
+				f = ((anan.read() * 3.3 - 0.76)/ 2.5) + 25;				
+                print(f);
+                      
+			}
+			setInterval("ti()",10000);             					
+		</script>
+
+	
+		<script language="javascript"> 
+			function led_on() { 
+		      led2.write(1); 
+		    } 
+			function led_off() { 
+			  led2.write(0); 
+		    } 
+		</script>
+
+
+</body>
+
+</html>
